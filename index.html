@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Activity 2 - INFOMGMT</title>
+    <link rel="shortcut icon" href="account.png" type="x-icon" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(gif-bg.gif);
+
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            position: relative;
+            width: 340px;
+            display: flex;
+            height: 570px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            padding: 100px 50px 100px 50px;
+            overflow: hidden;
+            background-color: rgb(0, 0, 0, 0.7);
+            margin-bottom: 150px;
+        }
+
+        form::before {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 200px;
+            background: #00eeff;
+            animation: rotate 5s linear infinite;
+        }
+
+        form::after {
+            content: "";
+            position: absolute;
+            background: #081a1a;
+            inset: 5px;
+            border-radius: 1rem;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        label {
+            color: #ffffff;
+            margin-right: 170px;
+            margin-bottom: 5px;
+            z-index: 1;
+        }
+
+
+        #otp-label {
+            color: #ffffff;
+            margin-right: 170px;
+            margin-bottom: 5px;
+            z-index: 1;
+            padding-right: 40px;
+        }
+
+        h1 {
+            color: rgb(37, 230, 255);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: bold;
+            padding-bottom: 20px;
+        }
+
+        #otp {
+            padding-right: 40px;
+            width: 150px;
+            z-index: 1;
+        }
+
+        input[type=text],
+        input[type=password] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            width: 250px;
+            z-index: 1;
+            border-radius: 5px;
+
+        }
+
+
+        img {
+            padding-bottom: 10px;
+            height: 175px;
+            width: 150px;
+            z-index: 1;
+        }
+
+        #otp-generate {
+            width: 100px;
+            padding: 11px;
+            border-radius: 5px;
+
+        }
+
+        #submit {
+            width: 240px;
+            padding: 15px;
+            margin-top: 25px;
+            background-color: #1abeca;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 100px;
+            z-index: 1;
+            font-size: 17px;
+        }
+
+        #submit:hover {
+            background-color: #2e91aa;
+
+        }
+
+        span,
+        h3 {
+            color: #ffffff;
+        }
+
+        #generate-otp {
+            padding: 20px;
+            background: #00eeff;
+            color: white;
+        }
+
+        .input-otp {
+            z-index: 1;
+        }
+
+        input[type=button]:hover {
+            background-color: #2e91aa;
+        }
+
+        div {
+            display: table;
+        }
+
+        div.t {
+            display: table-cell;
+            width: 100%;
+        }
+
+        div.t>input {
+            width: 100%;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>LOGIN WITH OTP</h1>
+        <form id="login-form" action="">
+            <img src="male.png" alt="image" />
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter Username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            <label for="otp" id="otp-label">OTP:</label>
+            <div class="input-otp">
+                <div class="t">
+                    <input type="text" id="otp" name="otp" placeholder="Enter OTP" required><br>
+                </div>
+                <input id="otp-generate" type="button" value="Resend" onclick="show()" />
+            </div>
+            <h3 class="forgot-pass">Forgot Password</h3>
+            <input id="submit" type="button" value="Submit" onclick="validateLogin();">
+
+        </form>
+        <h3>Username: denzel &nbsp; Password: 123 &nbsp; OTP: <span></spam>
+    </div>
+
+    <script>
+        function generateOTP() {
+            var digits = '0123456789';
+            var otp = '';
+            for (let i = 0; i < 6; i++) {
+                otp += digits[Math.floor(Math.random() * 10)];
+            }
+            return otp;
+        }
+
+        function validateLogin() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var otp = document.getElementById('otp').value;
+            var storedUsername = 'denzel';
+            var storedPassword = '123';
+            var storedOTP = localStorage.getItem('otp');
+            if (username === storedUsername && password === storedPassword && otp === storedOTP) {
+                alert('Login successful!');
+            } else {
+                alert('Invalid username, password, or OTP.');
+            }
+        }
+
+        function show() {
+            var otp = generateOTP();
+            localStorage.setItem('otp', otp);
+            alert('Your OTP is: ' + otp);
+            var span = document.querySelector('span'); span.innerHTML = otp;
+        }
+
+        var otp = generateOTP();
+        localStorage.setItem('otp', otp);
+        alert('Your OTP is: ' + otp);
+        var span = document.querySelector('span'); span.innerHTML = otp;
+
+    </script>
+</body>
+
+</html>
